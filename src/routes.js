@@ -55,7 +55,7 @@ routes.get('/', (req, res) => {
         const due_day = created_date.getDate() + Number(remaining_days)
         const due_date_in_ms = created_date.setDate(due_day) 
         
-        const time_diff_in_ms = due_date_in_ms - Date.now()
+        const time_diff_in_ms = due_date_in_ms - Date.now() //milissegundos
         console.log(due_day)
         console.log(due_date)
         return job
