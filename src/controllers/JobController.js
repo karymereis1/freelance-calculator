@@ -8,11 +8,11 @@ module.exports = {
     return res.render("job");
   },
 
-  save(req, res) {
+  async save(req, res) {
     //req.body = { name: 'TESTE', 'daily-hours': '7', 'total-hours': '7' }
-    const jobs = Job.get();
+    const jobs = await Job.get();
     const last_job_id = jobs[jobs.length - 1]?.id || 0;
-    jobs.push({
+    Job.create({
       id: last_job_id + 1,
       name: req.body.name,
       "daily-hours": req.body["daily-hours"],
@@ -22,9 +22,9 @@ module.exports = {
     return res.redirect("/");
   },
 
-  show(req, res) {
-    const jobs = Job.get();
-    const profile = Profile.get();
+  async show(req, res) {
+    const jobs = await Job.get();
+    const profile = await Profile.get();
 
     const job_id = req.params.id;
 
@@ -39,8 +39,8 @@ module.exports = {
     return res.render("job-edit", { job });
   },
 
-  update(req, res) {
-    const jobs = Job.get();
+  async update(req, res) {
+    const jobs = await Job.get();
     const job_id = req.params.id;
     const job = jobs.find((job) => Number(job.id) === Number(job_id));
 

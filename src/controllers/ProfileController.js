@@ -1,11 +1,11 @@
 const Profile = require('../model/Profile')
 
 module.exports = {
-    index (req, res) {
-       return res.render("profile", {profile: Profile.get()})
+    async index (req, res) {
+       return res.render("profile", {profile: await Profile.get()})
     },
 
-    update (req, res) {
+    async update (req, res) {
 
         const data = req.body
         const weeks_per_year = 52
@@ -15,8 +15,10 @@ module.exports = {
 
         const value_hour = data["monthly-budget"] / monthly_total_hours
 
-        Profile.update({
-            ...Profile.get(),
+        const profile = await Profile.get()
+
+        await Profile.update({
+            ...profile,
             ...req.body,
             "value-hour": value_hour
         })
